@@ -1,4 +1,5 @@
 from fastapi import FastAPI, UploadFile, File, Depends
+from services.file_service import save_file
 from sqlalchemy.orm import Session
 
 from database import engine
@@ -40,28 +41,16 @@ def upload_document(
     db: Session = Depends(get_db)
 ):
 
-    file_path = f"{UPLOAD_FOLDER}/{file.filename}"
-
-
-    with open(file_path, "wb") as buffer:
-        shutil.copyfileobj(
-            file.file,
-            buffer
-        )
-
+    file_path = save_file(file)
 
     document = Document(
         filename=file.filename,
         filepath=file_path
     )
 
-
     db.add(document)
     db.commit()
-    db.refresh(document)
-
 
     return {
-        "message": "Document uploaded successfully",
-        "filename": document.filename
+        "message": "Document uploaded successfully"
     }

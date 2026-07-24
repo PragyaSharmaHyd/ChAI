@@ -1,3 +1,4 @@
+
 def split_text(text, chunk_size=500):
 
     chunks = []

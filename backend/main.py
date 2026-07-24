@@ -1,9 +1,12 @@
 from fastapi import FastAPI, UploadFile, File, Depends
-from services.file_service import save_file
 from sqlalchemy.orm import Session
 
+from services.file_service import save_file
+from services.pdf_service import extract_text
+from services.chunk_service import split_text
+
 from database import engine
-from models import Base, Document
+from models import Base, Document, DocumentChunk
 from dependencies import get_db
 
 import shutil
@@ -42,6 +45,8 @@ def upload_document(
 ):
 
     file_path = save_file(file)
+    text = extract_text(file_path)
+    chunks = split_text(text)
 
     document = Document(
         filename=file.filename,
@@ -49,6 +54,19 @@ def upload_document(
     )
 
     db.add(document)
+    db.commit()
+    db.refresh(document)
+
+    for index, chunk in enumerate(chunks):
+
+        document_chunk = DocumentChunk(
+            document_id=document.id,
+            chunk_index=index,
+            content=chunk
+        )
+
+        db.add(document_chunk)
+
     db.commit()
 
     return {

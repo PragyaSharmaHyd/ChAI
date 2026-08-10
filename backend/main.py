@@ -3,10 +3,10 @@ from sqlalchemy.orm import Session
 
 from services.file_service import save_file
 from services.pdf_service import extract_text
-from services.chunk_service import split_text
+from services.chunk_service import split_text, save_chunk
 
 from database import engine
-from models import Base, Document, DocumentChunk
+from models import Base, Document
 from dependencies import get_db
 
 import shutil
@@ -57,17 +57,10 @@ def upload_document(
     db.commit()
     db.refresh(document)
 
-    for index, chunk in enumerate(chunks):
-
-        document_chunk = DocumentChunk(
-            document_id=document.id,
-            chunk_index=index,
-            content=chunk
-        )
-
-        db.add(document_chunk)
-
-    db.commit()
+    save_chunk(
+    document.id,
+    chunks
+)
 
     return {
         "message": "Document uploaded successfully"

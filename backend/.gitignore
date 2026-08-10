@@ -3,3 +3,4 @@ __pycache__/
 *.pyc
 chai.db
 uploads/
+.env

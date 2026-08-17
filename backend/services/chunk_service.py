@@ -17,7 +17,7 @@ def split_text(text, chunk_size=500, overlap=100):
 
         chunks.append(chunk)
 
-        start = end - overlap
+        start += chunk_size - overlap
 
     return chunks
 

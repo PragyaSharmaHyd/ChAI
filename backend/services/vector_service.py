@@ -1,6 +1,7 @@
 import chromadb
 from services.embedding_service import create_embedding
 
+# manages vector storage and search operations using ChromaDB
 
 # Create ChromaDB client
 client = chromadb.PersistentClient(
@@ -13,7 +14,7 @@ collection = client.get_or_create_collection(
     name="document_chunks"
 )
 
-
+# stores a chunk of text into the ChromaDB collection with its embedding and ID
 def store_chunk(chunk_id, text):
 
     embedding = create_embedding(text)
@@ -24,6 +25,7 @@ def store_chunk(chunk_id, text):
         documents=[text]
     )
 
+# searchs for relevant chunks in the ChromaDB collection based on a query and returns the results
 
 def search_chunks(query, number_results=5):
 

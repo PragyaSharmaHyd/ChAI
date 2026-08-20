@@ -2,7 +2,7 @@ from database import SessionLocal
 from models import DocumentChunk
 from services.vector_service import store_chunk
 
-
+# split the given text into chunks
 def split_text(text, chunk_size=500, overlap=100):
 
     chunks = []
@@ -21,7 +21,7 @@ def split_text(text, chunk_size=500, overlap=100):
 
     return chunks
 
-
+# store the cunks into database for referrals 
 def save_chunk(document_id, chunks):
 
     db = SessionLocal()

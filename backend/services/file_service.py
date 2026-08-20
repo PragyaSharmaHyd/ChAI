@@ -5,12 +5,12 @@ import os
 UPLOAD_FOLDER = "uploads"
 
 os.makedirs(
-    UPLOAD_FOLDER,
+    UPLOAD_FOLDER,  # where files will be saved
     exist_ok=True
 )
 
 
-def save_file(file):
+def save_file(file):    # saves an uploaded files to the uploads directory
 
     file_path = f"{UPLOAD_FOLDER}/{file.filename}"
 
@@ -19,5 +19,3 @@ def save_file(file):
             file.file,
             buffer
         )
-
-    return file_path

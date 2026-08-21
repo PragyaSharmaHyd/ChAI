@@ -19,3 +19,5 @@ def save_file(file):    # saves an uploaded files to the uploads directory
             file.file,
             buffer
         )
+
+    return file_path

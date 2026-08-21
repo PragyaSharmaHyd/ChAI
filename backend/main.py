@@ -1,9 +1,11 @@
 from fastapi import FastAPI, UploadFile, File, Depends
 from sqlalchemy.orm import Session
+from pydantic import BaseModel
 
 from services.file_service import save_file
 from services.pdf_service import extract_text
 from services.chunk_service import split_text, save_chunk
+from services.rag_service import answer_question
 
 from database import engine
 from models import Base, Document
@@ -21,6 +23,8 @@ app = FastAPI(
     description="AI-powered document organization assistant"
 )
 
+class QuestionRequest(BaseModel):
+    question: str   # expects the question to be recieved as a string
 
 UPLOAD_FOLDER = "uploads"
 
@@ -64,4 +68,13 @@ def upload_document(
 
     return {
         "message": "Document uploaded successfully"
+    }
+
+@app.post("/ask")
+def ask_question(request: QuestionRequest):
+
+    answer = answer_question(request.question)
+
+    return {
+        "answer": answer
     }

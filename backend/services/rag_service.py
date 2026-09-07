@@ -6,9 +6,9 @@ def answer_question(question):
 
     results = search_chunks(question)
 
-    chunks = results["documents"][0]
+    chunks = results["documents"][0]    # getting the retreived chunks
 
-    context = "\n\n".join(chunks)
+    context = "\n\n".join(chunks)   # combining the chunks
 
     answer = generate_answer(question, context)
 

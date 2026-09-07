@@ -4,8 +4,7 @@ from services.vector_service import search_chunks
 questions = [
     "What is Pragya's research experience?",
     "What programming languages has Pragya used?",
-    "Where does Pragya go to college?",
-    "What projects has Pragya worked on?"
+    "Where does Pragya go to college?"
 ]
 
 

@@ -3,21 +3,41 @@ from models import DocumentChunk
 from services.vector_service import store_chunk
 
 # split the given text into chunks
-def split_text(text, chunk_size=500, overlap=100):
+import re
+
+
+def split_text(spans):
 
     chunks = []
+    current_chunk = ""
 
-    start = 0
+    section_pattern = re.compile(r"^[A-Z][A-Z\s&]+$")
 
-    while start < len(text):
+    for span in spans:
 
-        end = start + chunk_size
+        line = span["text"].strip()
 
-        chunk = text[start:end]
+        if not line:
+            continue
 
-        chunks.append(chunk)
+        # Check if this is a major section heading
+        if section_pattern.match(line) and span["font"] == "Inter18pt-Bold" and span["size"] == 11.0:
 
-        start += chunk_size - overlap
+            if current_chunk:
+                chunks.append(current_chunk.strip())
+
+            current_chunk = f"[SECTION: {line}]"
+
+        else:
+
+            if current_chunk:
+                current_chunk += "\n" + line
+
+            else:
+                current_chunk = line
+
+    if current_chunk:
+        chunks.append(current_chunk.strip())
 
     return chunks
 

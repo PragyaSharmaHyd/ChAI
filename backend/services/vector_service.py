@@ -27,7 +27,7 @@ def store_chunk(chunk_id, text):
 
 # searchs for relevant chunks in the ChromaDB collection based on a query and returns the results
 
-def search_chunks(query, number_results=5):
+def search_chunks(query, number_results=8):
 
     query_embedding = create_embedding(query)
 

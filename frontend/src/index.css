@@ -1,0 +1,42 @@
+:root {
+  --canvas: #f5f7f5;
+  --surface: #ffffff;
+  --line: #e5eae6;
+  --ink: #202c27;
+  --muted: #8a9690;
+  --green: #4e9970;
+  --green-dark: #387853;
+  --green-wash: #eaf4ed;
+  --sans: 'Avenir Next', Avenir, 'Segoe UI', sans-serif;
+  --display: 'Iowan Old Style', 'Palatino Linotype', 'Book Antiqua', Georgia, serif;
+
+  font-family: var(--sans);
+  font-size: 14px;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  color: var(--ink);
+  background: var(--canvas);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  min-width: 320px;
+  min-height: 100vh;
+  margin: 0;
+}
+
+button,
+a {
+  -webkit-tap-highlight-color: transparent;
+}
+
+button:focus-visible,
+a:focus-visible {
+  outline: 2px solid var(--green);
+  outline-offset: 3px;
+}
